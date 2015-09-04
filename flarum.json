@@ -1,0 +1,25 @@
+{
+    "name": "events",
+    "title": "Events",
+    "description": "Allow users to set an event into a post so people can join it.",
+    "keywords": ["events", "scheduling"],
+    "version": "0.1.0-alpha1",
+    "author": {
+        "name": "West Indie Collective",
+        "email": "westindiecollective@gmail.com"
+    },
+    "license": "MIT",
+    "require": {
+        "php": ">=5.4.0",
+        "flarum": ">0.1.0"
+    },
+    "support": {
+        "source": "https://github.com/YoruNoHikage/flarum-events",
+        "issues": "https://github.com/YoruNoHikage/flarum-events/issues"
+    },
+    "icon": {
+      "name": "calendar",
+      "backgroundColor": "#3A649D",
+      "color": "#fff"
+    }
+}
