@@ -10,7 +10,7 @@ class EventSerializer extends Serializer
     protected function getDefaultAttributes($event)
     {
         return [
-            'when'  => $event->when,
+            'when'  => $event->when->toRFC3339String(),
         ];
     }
 

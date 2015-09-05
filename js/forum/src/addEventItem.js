@@ -14,7 +14,7 @@ export default function() {
         <div className="Post-event">
           {icon('calendar')}
           <span>Awesome Event, </span>
-          {humanTime(new Date("2015-10-01"))}
+          {humanTime(event.when())}
         </div>
       ));
     }

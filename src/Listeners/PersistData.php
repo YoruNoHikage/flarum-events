@@ -31,8 +31,7 @@ class PersistData
 
             // TO DO: notify changing event
 
-            // $eventPost = Event::build($eventPostRaw['when']);
-            $eventPost = Event::build(new \DateTime());
+            $eventPost = Event::build(new \DateTime($eventPostRaw['when']));
             $eventPost->post()->associate($post);
             $eventPost->save();
         }
