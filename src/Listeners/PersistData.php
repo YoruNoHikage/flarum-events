@@ -31,8 +31,20 @@ class PersistData
 
             // TO DO: notify changing event
 
-            $eventPost = Event::build(new \DateTime($eventPostRaw['when']));
-            $eventPost->post()->associate($post);
+            $existingEvent = $post->event();
+            if(!$eventPostRaw['when']) {
+                $existingEvent->delete();
+                return;
+            }
+
+            if($existingEvent->exists()) {
+                $eventPost = $post->event;
+                $eventPost->when = new \DateTime($eventPostRaw['when']);
+            } else {
+                $eventPost = Event::build(new \DateTime($eventPostRaw['when']));
+                $eventPost->post()->associate($post);
+            }
+
             $eventPost->save();
         }
     }
@@ -40,8 +52,7 @@ class PersistData
     public function whenPostWasDeleted(PostWasDelete $event)
     {
         if($eventPost = $event->post->event()) {
-            $eventPost->detach();
-            $eventPost->delete();
+            $this->deleteEvent($eventPost);
         }
     }
 }
