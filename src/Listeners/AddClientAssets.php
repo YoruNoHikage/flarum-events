@@ -30,15 +30,15 @@ class AddClientAssets
             // 'events.hello_world'
         ]);
 
-        $event->adminAssets([
-            __DIR__.'/../../js/admin/dist/extension.js',
-            __DIR__.'/../../less/admin/extension.less'
-        ]);
-
-        $event->adminBootstrapper('events/main');
-
-        $event->adminTranslations([
-            // 'events.hello_world'
-        ]);
+        // $event->adminAssets([
+        //     __DIR__.'/../../js/admin/dist/extension.js',
+        //     __DIR__.'/../../less/admin/extension.less'
+        // ]);
+        //
+        // $event->adminBootstrapper('events/main');
+        //
+        // $event->adminTranslations([
+        //     // 'events.hello_world'
+        // ]);
     }
 }

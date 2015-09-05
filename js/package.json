@@ -1,0 +1,6 @@
+{
+  "devDependencies": {
+    "flarum-gulp": "^0.1.0",
+    "gulp": "^3.9.0"
+  }
+}

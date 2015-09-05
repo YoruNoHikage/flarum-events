@@ -7,7 +7,7 @@ class Extension extends BaseExtension
 {
     public function listen(Dispatcher $events)
     {
-        // $events->subscribe('WIC\Events\Listeners\AddClientAssets');
+        $events->subscribe('WIC\Events\Listeners\AddClientAssets');
         $events->subscribe('WIC\Events\Listeners\AddModelRelationship');
         $events->subscribe('WIC\Events\Listeners\AddApiAttributes');
         $events->subscribe('WIC\Events\Listeners\PersistData');
