@@ -2,6 +2,9 @@ var gulp = require('flarum-gulp');
 
 gulp({
   modules: {
-    'events': 'src/**/*.js'
+    'events': [
+      '../lib/**/*.js',
+      'src/**/*.js'
+    ]
   }
 });
