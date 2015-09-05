@@ -34,7 +34,7 @@ class AddApiAttributes
            $action instanceof Posts\ShowAction ||
            $action instanceof Posts\CreateAction ||
            $action instanceof Posts\UpdateAction) {
-             $event->addInclude('events');
+             $event->addInclude('event');
         }
     }
 }
