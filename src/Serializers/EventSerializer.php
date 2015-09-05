@@ -5,7 +5,7 @@ use Flarum\Api\Serializers\Serializer;
 
 class EventSerializer extends Serializer
 {
-    protected $type = 'event';
+    protected $type = 'events';
 
     protected function getDefaultAttributes($event)
     {
