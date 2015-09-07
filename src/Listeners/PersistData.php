@@ -2,8 +2,9 @@
 
 use Flarum\Tags\Tag;
 use Flarum\Events\PostWillBeSaved;
-use Flarum\Events\PostWasDelete;
+use Flarum\Events\PostWasDeleted;
 use Flarum\Core\Posts\Post;
+use Flarum\Core\Posts\CommentPost;
 use Flarum\Core\Settings\SettingsRepository;
 use WIC\Events\Event;
 
@@ -26,30 +27,37 @@ class PersistData
     {
         $post = $event->post;
         $data = $event->data;
-        if($post->exists && isset($data['attributes']['event'])) {
-            $eventPostRaw = $data['attributes']['event'];
-
-            // TO DO: notify changing event
-
-            $existingEvent = $post->event();
-            if(!$eventPostRaw['when']) {
-                $existingEvent->delete();
-                return;
-            }
-
-            if($existingEvent->exists()) {
-                $eventPost = $post->event;
-                $eventPost->when = new \DateTime($eventPostRaw['when']);
-            } else {
-                $eventPost = Event::build(new \DateTime($eventPostRaw['when']));
-                $eventPost->post()->associate($post);
-            }
-
-            $eventPost->save();
+        if(!isset($data['attributes']['event'])) {
+          return;
         }
+
+        $eventPostRaw = $data['attributes']['event'];
+
+        // TO DO: notify changing event
+
+        $existingEvent = $post->event();
+        if(!$eventPostRaw['when']) {
+            $existingEvent->delete();
+            return;
+        }
+
+        if($existingEvent->exists()) {
+            $eventPost = $post->event;
+            $eventPost->when = new \DateTime($eventPostRaw['when']);
+        } else {
+            $eventPost = Event::build(new \DateTime($eventPostRaw['when']));
+        }
+
+        $whenPostWasSaved = function($post) use ($eventPost) {
+            $eventPost->post()->associate($post);
+            $eventPost->save();
+        };
+
+        Post::saved($whenPostWasSaved);
+        CommentPost::saved($whenPostWasSaved); // tmp, Post should handle it for its subclasses
     }
 
-    public function whenPostWasDeleted(PostWasDelete $event)
+    public function whenPostWasDeleted(PostWasDeleted $event)
     {
         if($eventPost = $event->post->event()) {
             $this->deleteEvent($eventPost);
