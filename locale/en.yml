@@ -1,2 +1,7 @@
 events:
-  # hello_world: "Hello, world!"
+  no_event: No Event
+  configure_event_modal_title: Configure Event
+  configure_date: Event date
+  save_event: Save
+
+  post_event_modal_title: Attenders

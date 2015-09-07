@@ -27,7 +27,11 @@ class AddClientAssets
         $event->forumBootstrapper('events/main');
 
         $event->forumTranslations([
-            // 'events.hello_world'
+            'events.no_event',
+            'events.configure_event_modal_title',
+            'events.configure_date',
+            'events.save_event',
+            'events.post_event_modal_title',
         ]);
 
         // $event->adminAssets([

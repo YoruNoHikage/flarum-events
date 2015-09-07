@@ -8,8 +8,7 @@ export default class PostEventModal extends Modal {
   }
 
   title() {
-    // return app.trans('events.post_event_modal_title');
-    return "Attenders";
+    return app.trans('events.post_event_modal_title');
   }
 
   content() {
