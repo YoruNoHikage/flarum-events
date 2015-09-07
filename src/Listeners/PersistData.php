@@ -60,7 +60,7 @@ class PersistData
     public function whenPostWasDeleted(PostWasDeleted $event)
     {
         if($eventPost = $event->post->event()) {
-            $this->deleteEvent($eventPost);
+            $eventPost->delete();
         }
     }
 }
