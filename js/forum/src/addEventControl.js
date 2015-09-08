@@ -24,6 +24,10 @@ export default function() {
     );
   };
 
+  TextEditor.prototype.deleteEvent = function() {
+    this.event = false;
+  };
+
   // 0.1.0-beta2
   extend(TextEditor.prototype, 'init', function() {
     if(this.props.post) {
@@ -35,26 +39,40 @@ export default function() {
     // 0.1.0-beta, remove this after beta2 release
     if(this.props.post && !this.tmpInit && app.forum.attribute('version') === '0.1.0-beta') {
       this.tmpInit = true;
+      this.originalEvent = this.props.post.event();
       this.event = this.event || this.props.post.event();
     } else {
       this.event = this.event || false;
     }
+
+    const deleteButton = Button.component({
+      icon: 'close',
+      className: 'Button Button--icon',
+      onclick: this.deleteEvent.bind(this),
+    });
+
     items.add('event', (
-      Button.component({
-        children: this.event ? fullTime(this.event.when()) : app.trans('events.no_event'),
-        icon: 'calendar',
-        className: 'Button',
-        onclick: this.configureEvent.bind(this),
-      })
+      <div className="ButtonGroup">
+        {Button.component({
+          children: this.event ? fullTime(this.event.when()) : app.trans('events.no_event'),
+          icon: 'calendar',
+          className: 'Button',
+          onclick: this.configureEvent.bind(this),
+        })}
+        {this.event ? deleteButton : ''}
+      </div>
     ));
 
     return items;
   });
 
   const dataExtended = function(data) {
-    const event = this.editor.event;
+    const { event, originalEvent } = this.editor;
     if(event) {
       data.event = event.data.attributes;
+    } else if(originalEvent) {
+      app.store.remove(originalEvent);
+      data.event = false;
     }
     return data;
   };
