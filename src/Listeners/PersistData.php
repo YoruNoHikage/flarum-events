@@ -1,6 +1,6 @@
 <?php namespace WIC\Events\Listeners;
 
-use Flarum\Tags\Tag;
+use Flarum\Core\Exceptions\PermissionDeniedException;
 use Flarum\Events\PostWillBeSaved;
 use Flarum\Events\PostWasDeleted;
 use Flarum\Core\Posts\Post;
@@ -34,6 +34,10 @@ class PersistData
         $eventPostRaw = $data['attributes']['event'];
 
         // TO DO: notify changing event
+
+        if(!$post->can($event->actor, 'event')) {
+            throw new PermissionDeniedException;
+        }
 
         $existingEvent = $post->event();
         if(!$eventPostRaw['when']) {
