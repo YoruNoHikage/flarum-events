@@ -24,9 +24,16 @@ export default function() {
     );
   };
 
+  // 0.1.0-beta2
+  extend(TextEditor.prototype, 'init', function() {
+    if(this.props.post) {
+      this.event = this.event || this.props.post.event();
+    }
+  });
+
   extend(TextEditor.prototype, 'controlItems', function(items) {
-    // tmp, should be in constructor or initProps
-    if(this.props.post && !this.tmpInit) {
+    // 0.1.0-beta, remove this after beta2 release
+    if(this.props.post && !this.tmpInit && app.forum.attribute('version') === '0.1.0-beta') {
       this.tmpInit = true;
       this.event = this.event || this.props.post.event();
     } else {
@@ -56,7 +63,13 @@ export default function() {
   extend(DiscussionComposer.prototype, 'data', dataExtended);
   extend(EditPostComposer.prototype, 'data', dataExtended);
 
-  extend(EditPostComposer.prototype, 'view', function(view) { // tmp, should be in constructor or initProps
+  // 0.1.0-beta2
+  extend(EditPostComposer.prototype, 'init', function() {
+    this.editor.props.post = this.props.post;
+  });
+
+  // 0.1.0-beta, remove this after beta2 release
+  extend(EditPostComposer.prototype, 'view', function(view) {
     this.editor.props.post = this.props.post;
     return view;
   });
