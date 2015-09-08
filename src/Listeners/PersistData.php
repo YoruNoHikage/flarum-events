@@ -48,13 +48,10 @@ class PersistData
             $eventPost = Event::build(new \DateTime($eventPostRaw['when']));
         }
 
-        $whenPostWasSaved = function($post) use ($eventPost) {
+        $post::saved(function($post) use ($eventPost) {
             $eventPost->post()->associate($post);
             $eventPost->save();
-        };
-
-        Post::saved($whenPostWasSaved);
-        CommentPost::saved($whenPostWasSaved); // tmp, Post should handle it for its subclasses
+        });
     }
 
     public function whenPostWasDeleted(PostWasDeleted $event)
